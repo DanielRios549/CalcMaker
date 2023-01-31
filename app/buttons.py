@@ -25,7 +25,7 @@ class Buttons():
         return flet.ElevatedButton(
             text='Generate',
             icon=flet.icons.CREATE,
-            on_click=self.main.operations,
+            on_click=self.main.operations.make,
             bgcolor=flet.colors.BLUE,
             icon_color=flet.colors.WHITE,
             color=flet.colors.WHITE

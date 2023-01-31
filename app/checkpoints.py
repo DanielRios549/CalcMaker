@@ -13,3 +13,8 @@ class CheckPoints():
             'md': 2,
             'sm': 6
         }
+
+    def preview(self) -> dict[str, float]:
+        return {
+            'sm': 12
+        }

@@ -1,6 +1,4 @@
 from dataclasses import dataclass
-from random import sample
-from generate import Generate
 import app
 import flet
 
@@ -13,21 +11,26 @@ class CalcMaker():
         self.page.title = "Calc Maker"
         self.page.horizontal_alignment = flet.CrossAxisAlignment.CENTER
 
-        self.buttons()
+        self.buttons = app.Buttons(self)
+        self.start = self.buttons.start()
+        self.end = self.buttons.end()
+        self.operations = app.Operations(self)
 
-    def buttons(self):
-        buttons = app.Buttons(self)
+        self.preLoad()
 
+    def preLoad(self):
         self.inputs = (
             flet.ResponsiveRow(
                 [
                     flet.Container(
-                        buttons.start(),
-                        bgcolor=flet.colors.BLUE_GREY_900
+                        self.start,
+                        bgcolor=flet.colors.BLUE_GREY_900,
+                        col=app.CheckPoints().input()
                     ),
                     flet.Container(
-                        buttons.end(),
-                        bgcolor=flet.colors.BLUE_GREY_900
+                        self.end,
+                        bgcolor=flet.colors.BLUE_GREY_900,
+                        col=app.CheckPoints().input()
                     )
                     # self.start,
                     # self.end
@@ -71,7 +74,7 @@ class CalcMaker():
             ),
             flet.Row([
                 flet.Container(
-                    buttons.generate(),
+                    self.buttons.generate(),
                     col=app.CheckPoints().input(),
                     bgcolor=flet.colors.BLUE,
                     expand=True
@@ -81,8 +84,15 @@ class CalcMaker():
 
         self.results = [
             flet.ResponsiveRow(
-                height=500,
-                col=app.CheckPoints().input()
+                [
+                    flet.Container(
+                        flet.Text(
+                            'Type the minimal and maximum number and click in Gererate',
+                            text_align=flet.TextAlign.CENTER
+                        ),
+                        col=app.CheckPoints().preview()
+                    )
+                ]
             )
         ]
 
@@ -90,51 +100,6 @@ class CalcMaker():
             *self.inputs,
             *self.results
         )
-
-    def operations(self, event: flet.Event):
-        self.results[0].clean()
-
-        # + Plus (Addition)
-        # - Minus (Subtraction)
-        # ÷ Obelus (Division)
-        # x Times (Multiplication)
-        operators = ('+', '-', '÷', 'x')
-        operations = []
-
-        numbers = range(int(self.start.value or 1), int(self.end.value or 1) + 1 or 3)
-
-        for number in range(0, 16):
-            choose = sample(numbers, 2)
-            operation = []
-
-            operation.append(f'{choose[0]:>4}')
-            operation.append(f'{operators[0]:<1} {choose[1]:>2}')
-            operation.append('-' * 6)
-
-            self.results[0].controls.append(
-                flet.Row(
-                    controls=[
-                        flet.Column(
-                            alignment=flet.MainAxisAlignment.SPACE_BETWEEN,
-                            controls=[
-                                flet.Text(f'{choose[0]:>5}'),
-                                flet.Text(f'{operators[0]:<1} {choose[1]:>2}'),
-                                flet.Text('-' * 6)
-                            ]
-                        )
-                    ]
-                )
-            )
-
-        self.page.update()
-        # generate = Generate('operations.pdf', operations)
-        # generate.create_a4_paper()
-
-        # self.page.add(
-        #     flet.Container(
-        #         content=generate.canvas.)
-        #     )
-        # )
 
         self.page.update()
 
