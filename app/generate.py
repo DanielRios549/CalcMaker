@@ -36,6 +36,4 @@ class Generate():
                     self.y -= 50
 
         self.canvas.showPage()
-
-    def save(self):
         self.canvas.save()

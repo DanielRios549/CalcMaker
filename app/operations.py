@@ -1,7 +1,7 @@
 from dataclasses import dataclass
-from random import sample
-from generate import Generate
 from main import CalcMaker
+from random import sample
+from app.generate import Generate
 import flet
 
 
@@ -45,8 +45,8 @@ class Operations():
             )
 
         self.main.page.update()
-        # generate = Generate('operations.pdf', operations)
-        # generate.create_a4_paper()
+        generate = Generate('operations.pdf', operations)
+        generate.create_a4_paper()
 
         # self.page.add(
         #     flet.Container(
