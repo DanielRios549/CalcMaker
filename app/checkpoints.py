@@ -16,5 +16,7 @@ class CheckPoints():
 
     def preview(self) -> dict[str, float]:
         return {
-            'sm': 12
+            'md': 2,
+            'sm': 3,
+            'xs': 6
         }

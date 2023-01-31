@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from main import CalcMaker
 from random import sample
-from app.generate import Generate
+import app
 import flet
 
 
@@ -10,7 +10,8 @@ class Operations():
     main: CalcMaker
 
     def make(self, event: flet.Event):
-        self.main.results[0].clean()
+        self.main.message.clean()
+        self.main.result.clean()
 
         # + Plus (Addition)
         # - Minus (Subtraction)
@@ -29,23 +30,46 @@ class Operations():
             operation.append(f'{operators[0]:<1} {choose[1]:>2}')
             operation.append('-' * 6)
 
-            self.main.results[0].controls.append(
-                flet.Row(
-                    controls=[
-                        flet.Column(
-                            alignment=flet.MainAxisAlignment.SPACE_BETWEEN,
-                            controls=[
-                                flet.Text(f'{choose[0]:>5}'),
-                                flet.Text(f'{operators[0]:<1} {choose[1]:>2}'),
-                                flet.Text('-' * 6)
-                            ]
-                        )
-                    ]
+            self.main.result.controls.append(
+                flet.Container(
+                    flet.Column(
+                        [
+                            flet.Row(
+                                [
+                                    flet.Text(
+                                        f'{choose[0]}',
+                                        size=20
+                                    ),
+                                ],
+                                alignment=flet.MainAxisAlignment.END,
+                                height=30
+                            ),
+                            flet.Row(
+                                [
+                                    flet.Text(
+                                        f'{operators[0]}   {choose[1]}',
+                                        size=20,
+                                    ),
+                                ],
+                                alignment=flet.MainAxisAlignment.END,
+                                height=30
+                            )
+                        ]
+                    ),
+                    margin=flet.margin.only(bottom=50),
+                    border=flet.border.only(
+                        bottom=flet.border.BorderSide(1, flet.colors.WHITE)
+                    ),
+                    alignment=flet.alignment.center,
+                    col=app.CheckPoints().preview(),
+                    expand=False,
+                    width=30,
+                    height=70
                 )
             )
 
         self.main.page.update()
-        generate = Generate('operations.pdf', operations)
+        generate = app.Generate('operations.pdf', operations)
         generate.create_a4_paper()
 
         # self.page.add(

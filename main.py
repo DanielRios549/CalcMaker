@@ -82,23 +82,23 @@ class CalcMaker():
             ])
         )
 
-        self.results = [
-            flet.ResponsiveRow(
-                [
-                    flet.Container(
-                        flet.Text(
-                            'Type the minimal and maximum number and click in Gererate',
-                            text_align=flet.TextAlign.CENTER
-                        ),
-                        col=app.CheckPoints().preview()
+        self.message = flet.ResponsiveRow(
+            [
+                flet.Container(
+                    flet.Text(
+                        'Type the minimal and maximum number and click in Gererate',
+                        text_align=flet.TextAlign.CENTER,
+                        color=flet.colors.WHITE70
                     )
-                ]
-            )
-        ]
+                )
+            ]
+        )
+        self.result = flet.ResponsiveRow(spacing=10)
 
         self.page.add(
             *self.inputs,
-            *self.results
+            self.message,
+            flet.ListView([self.result], expand=1, padding=20)
         )
 
         self.page.update()
