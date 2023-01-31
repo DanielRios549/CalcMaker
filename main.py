@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from random import sample
 from generate import Generate
-import checkpoints as ck
+import app
 import flet
 
 
@@ -16,34 +16,17 @@ class CalcMaker():
         self.buttons()
 
     def buttons(self):
-        checkpoints = ck.CheckPoints(self)
-
-        self.start = flet.TextField(
-            label="Minimal",
-            hint_text="What's the minimal number: ",
-            col=checkpoints.input(),
-            keyboard_type=flet.KeyboardType.NUMBER
-        )
-        self.end = flet.TextField(
-            label="Maximum",
-            hint_text="What's the maximum number: ",
-            col=checkpoints.input(),
-            keyboard_type=flet.KeyboardType.NUMBER
-        )
-
-        generate = flet.IconButton(flet.icons.CREATE, on_click=self.operations)
+        buttons = app.Buttons(self)
 
         self.inputs = (
             flet.ResponsiveRow(
                 [
                     flet.Container(
-                        self.start,
-                        col=checkpoints.input(),
+                        buttons.start(),
                         bgcolor=flet.colors.BLUE_GREY_900
                     ),
                     flet.Container(
-                        self.end,
-                        col=checkpoints.input(),
+                        buttons.end(),
                         bgcolor=flet.colors.BLUE_GREY_900
                     )
                     # self.start,
@@ -60,36 +43,36 @@ class CalcMaker():
                             value=True,
                             disabled=True
                         ),
-                        col=checkpoints.checkbox()
+                        col=app.CheckPoints().checkbox()
                     ),
                     flet.Container(
                         content=flet.Checkbox(
                             label='Subtraction',
                             disabled=True
                         ),
-                        col=checkpoints.checkbox()
+                        col=app.CheckPoints().checkbox()
                     ),
                     flet.Container(
                         content=flet.Checkbox(
                             label='Multiplication',
                             disabled=True
                         ),
-                        col=checkpoints.checkbox()
+                        col=app.CheckPoints().checkbox()
                     ),
                     flet.Container(
                         content=flet.Checkbox(
                             label='Division',
                             disabled=True
                         ),
-                        col=checkpoints.checkbox()
+                        col=app.CheckPoints().checkbox()
                     ),
                 ],
                 alignment=flet.MainAxisAlignment.SPACE_BETWEEN
             ),
             flet.Row([
                 flet.Container(
-                    generate,
-                    col=checkpoints.input(),
+                    buttons.generate(),
+                    col=app.CheckPoints().input(),
                     bgcolor=flet.colors.BLUE,
                     expand=True
                 )
@@ -99,7 +82,7 @@ class CalcMaker():
         self.results = [
             flet.ResponsiveRow(
                 height=500,
-                col=checkpoints.input()
+                col=app.CheckPoints().input()
             )
         ]
 
