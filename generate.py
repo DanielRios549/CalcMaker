@@ -1,32 +1,41 @@
+from dataclasses import dataclass
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen.canvas import Canvas
 
 
-def create_a4_paper(file_name: str, operations: list[str]):
-    canvas = Canvas(file_name, pagesize=A4)
-    canvas.setFont('Helvetica', 40)
+@dataclass()
+class Generate():
+    file_name: str
+    operations: list[str]
 
-    x = 30
-    y = 720
+    def __post_init__(self):
+        self.x = 30
+        self.y = 720
 
-    for index1, operation in enumerate(operations):
-        if index1 > 0 and index1 % 4 == 0:
-            x += 140
-            y = 720
+        self.canvas = Canvas(self.file_name, pagesize=A4)
+        self.canvas.setFont('Helvetica', 40)
 
-        for index2, line in enumerate(operation):
-            if index2 == 0:
-                x += 10
+    def create_a4_paper(self):
+        for index1, operation in enumerate(self.operations):
+            if index1 > 0 and index1 % 4 == 0:
+                self.x += 140
+                self.y = 720
 
-            canvas.drawString(x, y, line)
+            for index2, line in enumerate(operation):
+                if index2 == 0:
+                    self.x += 10
 
-            if index2 == 0:
-                x -= 10
+                self.canvas.drawString(self.x, self.y, line)
 
-            if line.startswith('-'):
-                y -= 90
-            else:
-                y -= 50
+                if index2 == 0:
+                    self.x -= 10
 
-    canvas.showPage()
-    canvas.save()
+                if line.startswith('-'):
+                    self.y -= 90
+                else:
+                    self.y -= 50
+
+        self.canvas.showPage()
+
+    def save(self):
+        self.canvas.save()
