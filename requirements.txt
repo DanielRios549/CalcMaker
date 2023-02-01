@@ -1,4 +1,6 @@
 autopep8==2.0.1
-flet==0.3.2
 pycodestyle==2.10.0
+flet==0.3.2
 reportlab==3.6.12
+pyinstaller==5.7.0
+Pillow==9.4.0

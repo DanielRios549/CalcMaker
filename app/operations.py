@@ -17,18 +17,27 @@ class Operations():
         # - Minus (Subtraction)
         # ÷ Obelus (Division)
         # x Times (Multiplication)
-        operators = ('+', '-', '÷', 'x')
+        signals = ('+', '-', 'x', '÷')
+        operators = []
         operations = []
 
-        numbers = range(int(self.main.start.value or 1), int(self.main.end.value or 1) + 1 or 3)
+        for index, selection in enumerate(self.main.buttons.operands):
+            if selection.value is True:
+                operators.append(signals[index])
+
+        numbers = range(int(self.main.buttons.start.value or 1), int(self.main.buttons.end.value or 1) + 1)
 
         for number in range(0, 16):
-            choose = sample(numbers, 2)
-            operation = []
+            operands = sample(numbers, 2)
+            operator = sample(operators, 1)
 
-            operation.append(f'{choose[0]:>4}')
-            operation.append(f'{operators[0]:<1} {choose[1]:>2}')
-            operation.append('-' * 6)
+            if '-' in operator or '÷' in operator:
+                operands.sort()
+                operands.reverse()
+
+            operations.append(f'{operands[0]:>4}')
+            operations.append(f'{operator[0]:<1} {operands[1]:>2}')
+            operations.append('-' * 6)
 
             self.main.result.controls.append(
                 flet.Container(
@@ -37,7 +46,7 @@ class Operations():
                             flet.Row(
                                 [
                                     flet.Text(
-                                        f'{choose[0]}',
+                                        f'{operands[0]}',
                                         size=20
                                     ),
                                 ],
@@ -47,7 +56,7 @@ class Operations():
                             flet.Row(
                                 [
                                     flet.Text(
-                                        f'{operators[0]}   {choose[1]}',
+                                        f'{operator[0]}   {operands[1]}',
                                         size=20,
                                     ),
                                 ],

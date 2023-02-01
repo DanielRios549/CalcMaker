@@ -7,18 +7,43 @@ import flet
 class Buttons():
     main: CalcMaker
 
-    def start(self):
+    def __post_init__(self):
+        self.start = self.getStart()
+        self.end = self.getEnd()
+        self.operands = self.getOperands()
+
+    def getStart(self):
         return flet.TextField(
             label="Minimal",
-            hint_text="What's the minimal number: ",
+            hint_text="What's the minimal number? ",
             keyboard_type=flet.KeyboardType.NUMBER
         )
 
-    def end(self):
+    def getEnd(self):
         return flet.TextField(
             label="Maximum",
-            hint_text="What's the maximum number: ",
+            hint_text="What's the maximum number? ",
             keyboard_type=flet.KeyboardType.NUMBER
+        )
+
+    def getOperands(self):
+        return (
+            flet.Checkbox(
+                label='Addition',
+                value=True
+            ),
+            flet.Checkbox(
+                label='Subtraction',
+                disabled=False
+            ),
+            flet.Checkbox(
+                label='Multiplication',
+                disabled=False
+            ),
+            flet.Checkbox(
+                label='Division',
+                disabled=True
+            )
         )
 
     def generate(self):

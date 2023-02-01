@@ -12,8 +12,6 @@ class CalcMaker():
         self.page.horizontal_alignment = flet.CrossAxisAlignment.CENTER
 
         self.buttons = app.Buttons(self)
-        self.start = self.buttons.start()
-        self.end = self.buttons.end()
         self.operations = app.Operations(self)
 
         self.preLoad()
@@ -23,50 +21,34 @@ class CalcMaker():
             flet.ResponsiveRow(
                 [
                     flet.Container(
-                        self.start,
+                        content=self.buttons.start,
                         bgcolor=flet.colors.BLUE_GREY_900,
                         col=app.CheckPoints().input()
                     ),
                     flet.Container(
-                        self.end,
+                        content=self.buttons.end,
                         bgcolor=flet.colors.BLUE_GREY_900,
                         col=app.CheckPoints().input()
                     )
-                    # self.start,
-                    # self.end
                 ],
                 alignment=flet.MainAxisAlignment.CENTER,
-                # run_spacing={"xs": 10},
             ),
             flet.ResponsiveRow(
                 [
                     flet.Container(
-                        content=flet.Checkbox(
-                            label='Addition',
-                            value=True,
-                            disabled=True
-                        ),
+                        content=self.buttons.operands[0],
                         col=app.CheckPoints().checkbox()
                     ),
                     flet.Container(
-                        content=flet.Checkbox(
-                            label='Subtraction',
-                            disabled=True
-                        ),
+                        content=self.buttons.operands[1],
                         col=app.CheckPoints().checkbox()
                     ),
                     flet.Container(
-                        content=flet.Checkbox(
-                            label='Multiplication',
-                            disabled=True
-                        ),
+                        content=self.buttons.operands[2],
                         col=app.CheckPoints().checkbox()
                     ),
                     flet.Container(
-                        content=flet.Checkbox(
-                            label='Division',
-                            disabled=True
-                        ),
+                        content=self.buttons.operands[3],
                         col=app.CheckPoints().checkbox()
                     ),
                 ],
@@ -74,7 +56,7 @@ class CalcMaker():
             ),
             flet.Row([
                 flet.Container(
-                    self.buttons.generate(),
+                    content=self.buttons.generate(),
                     col=app.CheckPoints().input(),
                     bgcolor=flet.colors.BLUE,
                     expand=True
@@ -93,7 +75,7 @@ class CalcMaker():
                 )
             ]
         )
-        self.result = flet.ResponsiveRow(spacing=10)
+        self.result = flet.ResponsiveRow(spacing=80)
 
         self.page.add(
             *self.inputs,
