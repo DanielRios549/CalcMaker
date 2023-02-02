@@ -15,14 +15,14 @@ class Buttons():
     def getStart(self):
         return flet.TextField(
             label="Minimal",
-            hint_text="What's the minimal number? ",
+            hint_text="The minimal number (default: 1):",
             keyboard_type=flet.KeyboardType.NUMBER
         )
 
     def getEnd(self):
         return flet.TextField(
             label="Maximum",
-            hint_text="What's the maximum number? ",
+            hint_text="The maximum number (default: 9):",
             keyboard_type=flet.KeyboardType.NUMBER
         )
 

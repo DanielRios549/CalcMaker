@@ -6,7 +6,7 @@ from reportlab.pdfgen.canvas import Canvas
 @dataclass()
 class Generate():
     file_name: str
-    operations: list[str]
+    operations: list[list[str]]
 
     def __post_init__(self):
         self.x = 30
@@ -30,7 +30,7 @@ class Generate():
                 if index2 == 0:
                     self.x -= 10
 
-                if line.startswith('-'):
+                if line.startswith('--'):
                     self.y -= 90
                 else:
                     self.y -= 50
